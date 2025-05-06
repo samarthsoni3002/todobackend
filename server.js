@@ -4,7 +4,9 @@ const bodyParser = require("body-parser");
 const { addTask, getTasks, deleteTask } = require("./cosmosClient");
 
 const app = express();
-const PORT = 3000;
+
+// Use the port provided by Azure, or fall back to 3000 locally
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -29,6 +31,7 @@ app.delete("/api/tasks/:id", async (req, res) => {
   res.json({ message: "Deleted" });
 });
 
+// Listen on the port provided by Azure or 3000 locally
 app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
+  console.log(`Server running on port ${PORT}`)
 );
